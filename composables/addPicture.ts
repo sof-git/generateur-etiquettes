@@ -16,9 +16,8 @@ type pictureBorders = 'dotted' | 'solid' | 'dashed';
 export const useComp = ()=>{
     const currentMenu = ref<'picture-menu' | 'add-picture'>('picture-menu')
     const labels: readonly LabelSize[] = [
-  ...Array(10).fill('large'),
-  ...Array(10).fill('small'),
-  ...Array(10).fill('large')
+  ...Array(9).fill('large'),
+  ...Array(5).fill('small'),
     ]
     const labelSize = useState<LabelSize>(
     'label-size',

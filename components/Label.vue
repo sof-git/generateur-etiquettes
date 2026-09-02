@@ -1,5 +1,5 @@
 <template>
-    <div class="rounded-lg d-flex align-center justify-center label" :class="`label-${size}`">
+    <div class="rounded-lg d-flex align-center justify-center label mx-1" :class="`label-${size}`">
         <v-img 
             class="rounded-circle photo"
             :src="img.src as string"
@@ -28,7 +28,7 @@ width: 30mm;
 
 
 .label {
-  width: 80px;
+  width: 90px;
   border: 1px solid black;
 
   display: flex;
@@ -37,7 +37,7 @@ width: 30mm;
 }
 
 .label-large {
-  height: 238.5px;
+ height: 310.2px;
 }
 
 .label-small {
@@ -46,7 +46,7 @@ width: 30mm;
 
 
 .photo {
-  width: 89.4px;
+  width: 200.4px;
   height: 89.4px;
   border-radius: 50%;
 }
