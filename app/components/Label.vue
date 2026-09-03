@@ -10,8 +10,7 @@
 </template>
 
 <script setup lang="ts">
-import {useComp} from '../composables/addPicture';
-const { img } = useComp()
+const { img } = usePicture()
 type LabelSize = 'large' | 'small'
 
 defineProps<{

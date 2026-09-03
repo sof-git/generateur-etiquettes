@@ -11,9 +11,19 @@ interface ILabel {
   size: LabelSize
 }
 
+interface CropChange {
+  coordinates: {
+    left: number
+    top: number
+    width: number
+    height: number
+  }
+  canvas: HTMLCanvasElement
+}
+
 type pictureBorders = 'dotted' | 'solid' | 'dashed';
 
-export const useComp = ()=>{
+export const usePicture = ()=>{
     const currentMenu = ref<'picture-menu' | 'add-picture'>('picture-menu')
     const labels: readonly LabelSize[] = [
   ...Array(9).fill('large'),
@@ -26,9 +36,14 @@ export const useComp = ()=>{
     const file = useState<File | null>();
     const img = useState<IImage>('image', () =>
     reactive({
-        src: '',
+        src: '../../public/img/defaultImg',
         file: null
     }))
+    const croppedImage = useState<IImage>('exportImage',()=>
+        reactive({
+            src:'',
+            file:null
+        }));
     const borders = useState<pictureBorders[]>(
         'picture-borders',
         () => ['dotted', 'solid', 'dashed'])
@@ -62,6 +77,41 @@ export const useComp = ()=>{
             img.value.file = file.value;
         } 
     };
+    const change = (change: CropChange) => {
+    const source = change.canvas
+
+    if (!source) return
+
+    const canvas = document.createElement('canvas')
+    canvas.width = source.width
+    canvas.height = source.height
+
+    const ctx = canvas.getContext('2d')
+
+    if (!ctx) return
+
+    const size = Math.min(canvas.width, canvas.height)
+    const x = (canvas.width - size) / 2
+    const y = (canvas.height - size) / 2
+
+    ctx.beginPath()
+    ctx.arc(
+        x + size / 2,
+        y + size / 2,
+        size / 2,
+        0,
+        Math.PI * 2
+    )
+
+    ctx.clip()
+
+    ctx.drawImage(source, 0, 0)
+
+    const data = canvas.toDataURL('image/png')
+
+    croppedImage.value.src = data
+    }
+
     return {
         currentMenu,
         showAddPicture,
@@ -73,6 +123,8 @@ export const useComp = ()=>{
         file,
         img,
         labelSize,
-        borders
+        borders,
+        croppedImage,
+        change
     }
 }
