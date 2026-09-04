@@ -36,7 +36,7 @@ export const usePicture = ()=>{
     const file = useState<File | null>();
     const img = useState<IImage>('image', () =>
     reactive({
-        src: '../../public/img/defaultImg',
+        src: '',
         file: null
     }))
     const croppedImage = useState<IImage>('exportImage',()=>
