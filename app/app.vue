@@ -1,6 +1,8 @@
 <template>
   <v-app>
-    <Home/>
+    <NuxtLayout>
+      <NuxtPage/>
+    </NuxtLayout>
   </v-app>
 </template>
 <script setup lang="ts">

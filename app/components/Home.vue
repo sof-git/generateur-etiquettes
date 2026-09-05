@@ -1,18 +1,13 @@
 <template>
     <v-container>
         <v-row>
-            <v-col cols="auto">
-                {{ homeTitle }}
-            </v-col>
-        </v-row>
-        <v-row>
             <v-col cols="12">
                 <div v-if="menu === 'home'">
-                    <v-btn @click="menu = 'picture'">
+                    <v-btn color="primary" @click="menu = 'picture'">
                     Photo / Crop
                     </v-btn>
 
-                    <v-btn @click="menu = 'labels'">
+                    <v-btn color="primary" @click="menu = 'labels'">
                     Étiquettes
                     </v-btn>
                 </div>
@@ -20,7 +15,7 @@
         </v-row>
         <v-row>
             <v-col cols="12">
-                <AddPicture v-if="menu === 'labels'" @back="menu = 'home'"/>
+                <Sheet v-if="menu === 'labels'" @back="menu = 'home'"/>
             </v-col>
         </v-row>
         <v-row>    
