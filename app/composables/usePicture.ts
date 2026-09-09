@@ -98,10 +98,15 @@ export const usePicture = ()=>{
         } 
     };
 
-    const addPictureToArray = (name:string,newImage:IImage,list:IImage[])=>{
+    const addPictureToArray = (
+        name: string,
+        newImage: IImage,
+        list: IImage[]
+        ) => {
         const source = cropCanvas.value
+
         if (!source) return
-        if (!cropperImg.value.name) return
+        if (!name) return
 
         const canvas = document.createElement('canvas')
         canvas.width = source.width
@@ -114,7 +119,8 @@ export const usePicture = ()=>{
         const size = Math.min(canvas.width, canvas.height)
         const x = (canvas.width - size) / 2
         const y = (canvas.height - size) / 2
-
+        console.log("x et y: ",x,y)
+        // Photo circulaire
         ctx.save()
 
         ctx.beginPath()
@@ -127,44 +133,40 @@ export const usePicture = ()=>{
         )
 
         ctx.clip()
-
         ctx.drawImage(source, 0, 0)
 
         ctx.restore()
-        console.log(cropperImg.value.name)
-        ctx.fillStyle = 'white'
-        ctx.font = '16px Calibri, Arial, sans-serif'
-        ctx.textAlign = 'center'
-        ctx.textBaseline = 'bottom'
-        console.log()
+
+        // Nom proportionnel à la taille du crop
         const fontSize = size * 0.18
+        const centerX = x + size / 2
+        const bottomY = y + size
         ctx.fillStyle = 'white'
         ctx.font = `bold ${fontSize}px Arial`
         ctx.textAlign = 'center'
         ctx.textBaseline = 'bottom'
 
         ctx.fillText(
-        cropperImg.value.name,
-        x + size / 2,
-        y + size - 150
+        name,
+        centerX,
+        bottomY - size * 0.08
         )
-        console.log(ctx)
+
+        // Génération de l'image finale
         const data = canvas.toDataURL('image/png')
 
         croppedImage.value.src = data
-        croppedImage.value.name = cropperImg.value.name
+        croppedImage.value.name = name
         croppedImage.value.file = null
-        if(!name){
-            return 'error'
-        }
+
+        // Ajout à la bibliothèque
         list.push({
             id: nextPictureId.value++,
-            src:newImage.src,
-            file:newImage.file,
-            name:name
+            src: data,
+            file: null,
+            name
         })
-        console.log(list)
-    }
+        }
 
     const selectPicture = (selectedPicture:IImage) =>{
         labelImg.value = selectedPicture;
