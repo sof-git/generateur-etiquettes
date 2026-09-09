@@ -27,7 +27,7 @@
 </template>
 
 <script setup lang="ts">
-const { homeTitle,menu } = useHome();
+const { menu } = useHome();
 </script>
 
 <style scoped>
