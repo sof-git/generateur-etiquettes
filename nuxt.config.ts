@@ -3,6 +3,12 @@ export default defineNuxtConfig({
     app: {
     baseURL: '/generateur-etiquettes'
   },
+   components: [
+    {
+      path: '~/components',
+      pathPrefix: false,
+    },
+  ],
   vuetify: {
     vuetifyOptions: {
       theme: {
@@ -11,7 +17,6 @@ export default defineNuxtConfig({
         themes: {
           warmTheme: {
             dark: false,
-
             colors: {
               primary: '#C96F4A',
               secondary: '#2c4e1f',

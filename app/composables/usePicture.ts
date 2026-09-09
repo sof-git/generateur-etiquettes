@@ -1,7 +1,8 @@
 interface IImage {
-    src: string | File;
+    id:number;
+    src: string;
     file: File | null;
-    border?:string;
+    name:string;
 }
 
 type LabelSize = 'large' | 'small';
@@ -34,16 +35,36 @@ export const usePicture = ()=>{
     () => 'large'
     )
     const file = useState<File | null>();
-    const img = useState<IImage>('image', () =>
+    const labelImg = useState<IImage>('image', () =>
     reactive({
+        id:0,
         src: '',
-        file: null
+        file: null,
+        name:''
     }))
+
+    const cropperImg = useState<IImage>('cropper-image', () => ({
+        id: 0,
+        src: '',
+        file: null,
+        name: ''
+    }))    
+    
     const croppedImage = useState<IImage>('exportImage',()=>
         reactive({
+            id:0,
             src:'',
-            file:null
+            file:null,
+            name:''
         }));
+    const picturesList = useState<IImage[]>(
+        'pictures-list',
+        ()=>[]
+    );
+
+    const cropCanvas = ref<HTMLCanvasElement | null>(null)
+
+    const nextPictureId = ref(1)
     const borders = useState<pictureBorders[]>(
         'picture-borders',
         () => ['dotted', 'solid', 'dashed'])
@@ -72,11 +93,87 @@ export const usePicture = ()=>{
 
     const onFileChange = async () => {
         if (file.value) {
-            console.log("enter file value before handleFile",file.value)
-            img.value.src = await handleFile(file.value);
-            img.value.file = file.value;
+            cropperImg.value.src = await handleFile(file.value);
+            cropperImg.value.file = file.value;
         } 
     };
+
+    const addPictureToArray = (name:string,newImage:IImage,list:IImage[])=>{
+        const source = cropCanvas.value
+        if (!source) return
+        if (!cropperImg.value.name) return
+
+        const canvas = document.createElement('canvas')
+        canvas.width = source.width
+        canvas.height = source.height
+
+        const ctx = canvas.getContext('2d')
+
+        if (!ctx) return
+
+        const size = Math.min(canvas.width, canvas.height)
+        const x = (canvas.width - size) / 2
+        const y = (canvas.height - size) / 2
+
+        ctx.save()
+
+        ctx.beginPath()
+        ctx.arc(
+            x + size / 2,
+            y + size / 2,
+            size / 2,
+            0,
+            Math.PI * 2
+        )
+
+        ctx.clip()
+
+        ctx.drawImage(source, 0, 0)
+
+        ctx.restore()
+        console.log(cropperImg.value.name)
+        ctx.fillStyle = 'white'
+        ctx.font = '16px Calibri, Arial, sans-serif'
+        ctx.textAlign = 'center'
+        ctx.textBaseline = 'bottom'
+        console.log()
+        const fontSize = size * 0.18
+        ctx.fillStyle = 'white'
+        ctx.font = `bold ${fontSize}px Arial`
+        ctx.textAlign = 'center'
+        ctx.textBaseline = 'bottom'
+
+        ctx.fillText(
+        cropperImg.value.name,
+        x + size / 2,
+        y + size - 150
+        )
+        console.log(ctx)
+        const data = canvas.toDataURL('image/png')
+
+        croppedImage.value.src = data
+        croppedImage.value.name = cropperImg.value.name
+        croppedImage.value.file = null
+        if(!name){
+            return 'error'
+        }
+        list.push({
+            id: nextPictureId.value++,
+            src:newImage.src,
+            file:newImage.file,
+            name:name
+        })
+        console.log(list)
+    }
+
+    const selectPicture = (selectedPicture:IImage) =>{
+        labelImg.value = selectedPicture;
+    }
+
+    const removePicture = (index:number,list:IImage[])=>{
+        list.splice(index,1);
+    }
+
     const change = (change: CropChange) => {
     const source = change.canvas
 
@@ -90,27 +187,12 @@ export const usePicture = ()=>{
 
     if (!ctx) return
 
-    const size = Math.min(canvas.width, canvas.height)
-    const x = (canvas.width - size) / 2
-    const y = (canvas.height - size) / 2
-
-    ctx.beginPath()
-    ctx.arc(
-        x + size / 2,
-        y + size / 2,
-        size / 2,
-        0,
-        Math.PI * 2
-    )
-
-    ctx.clip()
-
     ctx.drawImage(source, 0, 0)
 
-    const data = canvas.toDataURL('image/png')
-
-    croppedImage.value.src = data
+    cropCanvas.value = canvas
     }
+
+    
 
     return {
         currentMenu,
@@ -121,10 +203,15 @@ export const usePicture = ()=>{
         manageLabels,
         labels,
         file,
-        img,
+        labelImg,
+        cropperImg,
         labelSize,
         borders,
         croppedImage,
-        change
+        change,
+        picturesList,
+        addPictureToArray,
+        selectPicture,
+        removePicture,
     }
 }

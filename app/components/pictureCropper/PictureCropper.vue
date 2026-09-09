@@ -1,55 +1,65 @@
 <template>
   <v-container>
-    <v-card
-      max-width="800"
-      class="mx-auto pa-4"
-      elevation="4"
-      rounded="lg"
-    >
-      <v-card-title class="text-center text-h5">
-        Photo / Crop
-      </v-card-title>
-
-      <v-card-text>
-        <div class="d-flex justify-center">
-          <cropper
-            class="cropper"
-            :canvas="true"
-            :src="img.src as string"
-            :stencil-component="CircleStencil"
-            :stencil-props="{
-              aspectRatio: 10 / 12
-            }"
-            @change="change"
-          />
-        </div>
-      </v-card-text>
-
-      <v-card-actions class="justify-center">
-        <v-file-input
-          v-model="file"
-          label="Ajoutez une photo"
-          accept="image/*"
-          hide-details
-          density="compact"
-          class="mr-4"
-          style="max-width: 280px"
-          @change="onFileChange"
-        />
-
-        <v-btn
-          :disabled="!img.src"
-          color="primary"
+    <v-row>
+      <v-col cols="12">
+        <v-card
+          max-width="800"
+          class="mx-auto pa-4"
+          elevation="4"
+          rounded="lg"
         >
-          <a
-            :href="croppedImage.src as string"
-            download="croppedImage.png"
-          >
-            Exporter
-          </a>
-        </v-btn>
-      </v-card-actions>
-    </v-card>
+          <v-card-title class="text-center text-h5">
+            Photo / Crop
+          </v-card-title>
+
+          <v-card-text>
+            <div class="d-flex justify-center">
+              <cropper
+                class="cropper"
+                :canvas="true"
+                :src="cropperImg.src as string"
+                :stencil-component="CircleStencil"
+                :stencil-props="{
+                  aspectRatio: 10 / 12
+                }"
+                @change="change"
+              />
+            </div>
+          </v-card-text>
+
+          <v-card-actions class="justify-center">
+            <v-file-input
+              v-model="file"
+              label="Choisissez une photo"
+              accept="image/*"
+              hide-details
+              density="compact"
+              class="mr-4"
+              style="max-width: 280px"
+              @change="onFileChange"
+            />
+            <v-text-field label="Ajoutez un nom" v-model="cropperImg.name"></v-text-field>
+            <v-btn class="bg-secondary" :disabled="!cropperImg.src && !cropperImg.name" @click="cropperImg.src ? addPictureToArray(cropperImg.name,croppedImage,picturesList) : null">Ajouter la photo</v-btn>
+            <v-btn
+              :disabled="!cropperImg.src"
+              color="primary"
+            >
+              <a
+                :href="croppedImage.src as string"
+                download="croppedImage.png"
+              >
+                Exporter
+              </a>
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col cols="auto">
+        <PicturesList/>  
+    </v-col>  
+    </v-row>
   </v-container>
 </template>
 
@@ -58,7 +68,8 @@ const emit = defineEmits<{
   back: []
 }>();
 import { Cropper, CircleStencil } from 'vue-advanced-cropper'
-const { img,change,file,onFileChange,croppedImage } = usePicture();
+import PicturesList from '../sheet/PicturesList.vue';
+const { cropperImg,change,file,onFileChange,croppedImage,addPictureToArray,picturesList } = usePicture();
 </script>
 
 <style scoped>
