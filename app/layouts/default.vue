@@ -5,7 +5,13 @@
         </v-app-bar>
     <v-navigation-drawer class="bg-navBackground" permanent>
         <v-list>
-            <v-list-item v-for="nav in navigation" :title="nav" @click="menu = nav"></v-list-item>
+            <v-list-item
+            v-for="nav in navigation"
+            :key="nav.value"
+            :title="nav.label"
+            @click="menu = nav.value"
+            >
+            </v-list-item>
         </v-list>
     </v-navigation-drawer>
     <v-main class="bg-background">
