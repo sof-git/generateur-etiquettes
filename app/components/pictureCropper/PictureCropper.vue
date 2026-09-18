@@ -2,12 +2,7 @@
   <v-container>
     <v-row>
       <v-col cols="12">
-        <v-card
-          max-width="800"
-          class="mx-auto pa-4"
-          elevation="4"
-          rounded="lg"
-        >
+        <v-card max-width="800" class="mx-auto pa-4" elevation="4" rounded="lg">
           <v-card-title class="text-center text-h5">
             Photo / Crop
           </v-card-title>
@@ -20,7 +15,7 @@
                 :src="cropperImg.src as string"
                 :stencil-component="CircleStencil"
                 :stencil-props="{
-                  aspectRatio: 10 / 12
+                  aspectRatio: 10 / 12,
                 }"
                 @change="change"
               />
@@ -36,18 +31,28 @@
               density="compact"
               class="mr-4"
               style="max-width: 280px"
-              @change="onFileChange"
+              @change="onFileChange(cropperImg, file)"
             />
-            <v-text-field label="Ajoutez un nom" v-model="cropperImg.name"></v-text-field>
-            <v-btn class="bg-secondary" :disabled="!cropperImg.src && !cropperImg.name" @click="cropperImg.src ? addPictureToArray(cropperImg.name,croppedImage,picturesList) : null">Ajouter la photo</v-btn>
+            <v-text-field
+              label="Ajoutez un nom"
+              v-model="cropperImg.name"
+            ></v-text-field>
             <v-btn
-              :disabled="!cropperImg.src"
-              color="primary"
+              class="bg-secondary"
+              :disabled="!cropperImg.src && !cropperImg.name"
+              @click="
+                cropperImg.src
+                  ? addPictureToArray(
+                      'circle',
+                      cropperImg.name,
+                      picturesList,
+                    )
+                  : null
+              "
+              >Ajouter la photo</v-btn
             >
-              <a
-                :href="croppedImage.src as string"
-                download="croppedImage.png"
-              >
+            <v-btn :disabled="!cropperImg.src" color="primary">
+              <a :href="croppedImage.src as string" download="croppedImage.png">
                 Exporter
               </a>
             </v-btn>
@@ -57,25 +62,30 @@
     </v-row>
     <v-row>
       <v-col cols="auto">
-        <PicturesList/>  
-    </v-col>  
+        <PicturesList />
+      </v-col>
     </v-row>
   </v-container>
 </template>
 
 <script setup lang="ts">
-const emit = defineEmits<{
-  back: []
-}>();
-import { Cropper, CircleStencil } from 'vue-advanced-cropper'
-import PicturesList from '../sheet/PicturesList.vue';
-const { cropperImg,change,file,onFileChange,croppedImage,addPictureToArray,picturesList } = usePicture();
+import { Cropper, CircleStencil } from "vue-advanced-cropper";
+import PicturesList from "../sheet/PicturesList.vue";
+const {
+  cropperImg,
+  change,
+  croppedImage,
+  addPictureToArray,
+  picturesList,
+  file,
+} = usePicture();
+const { onFileChange } = useUpload();
 </script>
 
 <style scoped>
 .cropper {
-    width: 400px;
+  width: 400px;
   height: 400px;
-  background: #DDD;
+  background: #ddd;
 }
 </style>

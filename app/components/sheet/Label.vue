@@ -1,32 +1,33 @@
 <template>
-    <div class="rounded-xl d-flex align-center justify-center label" :class="`label-${size}`">
-        <Picture/>
-    </div>
+  <div
+    class="rounded-xl d-flex align-center justify-center label"
+    :class="`label-${size}`"
+  >
+    <Picture />
+  </div>
 </template>
 
 <script setup lang="ts">
-type LabelSize = 'large' | 'small'
+type LabelSize = "large" | "small";
 
 defineProps<{
-  size: LabelSize
-}>()
+  size: LabelSize;
+}>();
 </script>
 <style scoped>
-div{
-    background: #fff3cc;
-width: 30mm;
+div {
+  background: #fff3cc;
+  width: 30mm;
   height: 103.4mm;
 }
 
-
 .label {
   width: 30mm;
-  border: 3px solid black
-
+  border: 3px solid black;
 }
 
 .label-large {
-   height: 103.4mm;
+  height: 103.4mm;
 }
 
 .label-small {

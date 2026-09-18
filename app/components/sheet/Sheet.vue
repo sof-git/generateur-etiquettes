@@ -2,27 +2,21 @@
   <v-container>
     <v-row class="justify-center">
       <v-col cols="12">
-        <PicturesList/>
+        <PicturesList :pictures-list="picturesList" :original-image="labelImg"/>
       </v-col>
     </v-row>
     <v-row justify="center">
       <v-col cols="10">
-          <v-sheet 
-            class="sheet d-flex flex-wrap"
-            color="white"
-            elevation="3"
-            rounded="lg"
-          >
-          <Label
-            v-for="(size, index) in labels"
-            :key="index"
-            :size="size"
-          />
-            <div class="picContainer ml-1"
-            >
-              <Picture v-for="index in 6"
-              :key="`picture-${index}`" />
-            </div>   
+        <v-sheet
+          class="sheet d-flex flex-wrap"
+          color="white"
+          elevation="3"
+          rounded="lg"
+        >
+          <Label v-for="(size, index) in labels" :key="index" :size="size" />
+          <div class="picContainer ml-1">
+            <Picture v-for="index in 6" :key="`picture-${index}`" />
+          </div>
         </v-sheet>
       </v-col>
       <v-col cols="2">
@@ -32,25 +26,19 @@
       </v-col>
     </v-row>
   </v-container>
-
-
-
-
-
 </template>
 
 <script setup lang="ts">
-const { labels,labelImg } = usePicture();
-
+const { labels, labelImg,picturesList } = usePicture();
 </script>
 
 <style lang="css" scoped>
 .sheet {
   padding: 7mm;
-column-gap : 2.1px;
-row-gap    : 2.1px;
- width: 297mm;
-    height: 210mm;
+  column-gap: 2.1px;
+  row-gap: 2.1px;
+  width: 297mm;
+  height: 210mm;
 }
 
 .picContainer {
@@ -61,5 +49,4 @@ row-gap    : 2.1px;
   align-content: flex-start;
   gap: 5mm;
 }
-
 </style>

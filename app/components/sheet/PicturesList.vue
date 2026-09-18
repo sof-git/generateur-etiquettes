@@ -1,24 +1,18 @@
 <template>
   <div class="pictures-list">
     <div
-      v-for="(picture,index) in picturesList"
+      v-for="(picture, index) in picturesList"
       :key="picture.id"
       class="picture-item"
     >
-      <div class="picture-wrapper" @click="selectPicture(picture)">
-        <v-img
-          :src="picture.src"
-          width="200"
-          height="200"
-          cover
-          rounded="lg"
-        />
+      <div class="picture-wrapper" @click="selectPicture(picture,originalImage)">
+        <v-img :src="picture.src" width="200" height="200" cover rounded="lg" />
         <v-btn
           class="delete-btn"
-          icon="mdi-delete" 
+          icon="mdi-delete"
           size="small"
           color="error"
-          @click="removePicture(index,picturesList)"
+          @click="removePicture(index as number, picturesList)"
         />
       </div>
     </div>
@@ -26,7 +20,10 @@
 </template>
 
 <script setup lang="ts">
-const { picturesList, removePicture,selectPicture } = usePicture()
+
+const props = defineProps(['picturesList','originalImage']);
+console.log(props);
+const { removePicture, selectPicture } = usePicture();
 </script>
 
 <style scoped>

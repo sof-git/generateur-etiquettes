@@ -1,10 +1,10 @@
 <template>
-  <v-img 
-      class="photo border-dashed"
-      :src="labelImg.src as string"
-      alt="User Image"
-      aspect-ratio="1"
-  ></v-img>  
+  <v-img
+    class="photo border-dashed"
+    :src="labelImg.src as string"
+    alt="User Image"
+    aspect-ratio="1"
+  ></v-img>
 </template>
 
 <script setup lang="ts">
