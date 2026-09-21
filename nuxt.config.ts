@@ -23,6 +23,7 @@ export default defineNuxtConfig({
               background: '#FAF7F2',
               surface: '#FFFCF8',
               'orangeBorder':'#ff9900',
+              'blackBorder':'#000000',
               'navBackground':'#2C3E50',
               'on-background': '#332B27',
               'on-surface': '#332B27'

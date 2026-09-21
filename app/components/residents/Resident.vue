@@ -8,11 +8,15 @@
     <v-row>
       <PicturesList :pictures-list="residentsPictureList" :originalImage="pictureTemplate"/>
     </v-row>
-    <v-row class="justify-center">
+    <v-row>
+      <v-col cols="auto">
+        <span class="ma-auto text-headline-medium">Changer de page</span><v-switch v-model="switchPage" thumb-color="primary"/>
+      </v-col>
+    </v-row>
+    <v-row>
       <v-col cols="8">
-        <v-sheet class="sheet" color="white" elevation="3" rounded="lg">
-          <Placemat />
-        </v-sheet>
+        <tableSheet v-if="switchPage"/>
+        <pictureSheet v-else/>
       </v-col>
       <v-col cols="4">
         <v-card class="ma-5 px-5 d-flex flex-column align-center">
@@ -48,7 +52,7 @@
 </template>
 
 <script setup lang="ts">
-const { title, residentPicture, residentsPictureList, file, addResident,pictureTemplate } =
+const { title, residentPicture, residentsPictureList, file, addResident,pictureTemplate,switchPage } =
   useResident();
 const { onFileChange } = useUpload();
 </script>

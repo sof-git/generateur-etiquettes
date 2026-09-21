@@ -70,7 +70,6 @@
 
 <script setup lang="ts">
 import { Cropper, CircleStencil } from "vue-advanced-cropper";
-import PicturesList from "../sheet/PicturesList.vue";
 const {
   cropperImg,
   change,

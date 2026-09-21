@@ -4,6 +4,9 @@ export const useResident = () => {
   const { renderImage } = useImageRenderer();
   const title: Ref<string> = ref("Ajouter un résident");
   const file = ref<File | null>(null);
+  const switchPage = useState("switchPage",()=>
+    true
+  )
   const residentPicture = useState<IImage>("residentPicture", () =>
     reactive({
       id: 0,
@@ -52,5 +55,7 @@ export const useResident = () => {
     addResident,
     pictureTemplate,
     residentsPictureList,
+    switchPage,
+
   };
 };
