@@ -2,7 +2,7 @@
   <v-container>
     <v-row>
       <v-col cols="12">
-        <v-card max-width="800" class="mx-auto pa-4" elevation="4" rounded="lg">
+        <v-card max-width="800" class="mx-auto pa-4 d-flex flex-column" elevation="4" rounded="lg">
           <v-card-title class="text-center text-h5">
             Photo / Crop
           </v-card-title>
@@ -21,21 +21,20 @@
               />
             </div>
           </v-card-text>
-
-          <v-card-actions class="justify-center">
+          <v-card-actions class="d-flex flex-column w-100">
             <v-file-input
               v-model="file"
               label="Choisissez une photo"
               accept="image/*"
               hide-details
               density="compact"
-              class="mr-4"
-              style="max-width: 280px"
+              class="mr-4 w-100"
               @change="onFileChange(cropperImg, file)"
             />
             <v-text-field
-              label="Ajoutez un nom"
               v-model="cropperImg.name"
+              label="Ajoutez un nom"
+              class="w-100"
             ></v-text-field>
             <v-btn
               class="bg-secondary"
@@ -49,7 +48,8 @@
                     )
                   : null
               "
-              >Ajouter la photo</v-btn
+              >Ajouter la photo
+            </v-btn
             >
             <v-btn :disabled="!cropperImg.src" color="primary">
               <a :href="croppedImage.src as string" download="croppedImage.png">

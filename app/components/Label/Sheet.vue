@@ -6,30 +6,43 @@
       </v-col>
     </v-row>
     <v-row justify="center">
-      <v-col cols="10">
-        <v-sheet
-          class="sheet d-flex flex-wrap"
-          color="white"
-          elevation="3"
-          rounded="lg"
+      <v-col cols="12">
+        <v-btn
+          color="primary"
+          @click="generatePdf"
         >
-          <Label v-for="(size, index) in labels" :key="index" :size="size" />
-          <div class="picContainer ml-1">
-            <Picture v-for="index in 6" :key="`picture-${index}`" />
-          </div>
-        </v-sheet>
+          Exporter en PDF
+        </v-btn>          
+        <div ref="sheetRef" class="sheetContainer">
+          <v-sheet
+            class="sheet d-flex flex-wrap"
+            color="white"
+            elevation="3"
+            rounded="lg"
+          >
+            <Label v-for="(size, index) in labels" :key="index" :size="size" />
+            <div class="picContainer ml-1">
+              <Picture v-for="index in 6" :key="`picture-${index}`" />
+            </div>
+          </v-sheet>
+        </div>      
       </v-col>
-      <v-col cols="2">
-        <v-navigation-drawer permanent location="right">
-          menu
+        <v-navigation-drawer width="450" permanent location="right">
+          <PictureCropper/>
         </v-navigation-drawer>
-      </v-col>
     </v-row>
   </v-container>
 </template>
 
 <script setup lang="ts">
 const { labels, labelImg,picturesList } = usePicture();
+const { exportPdf } = usePdfExport()
+const sheetRef = ref<HTMLElement | null>(null)
+const generatePdf = async () => {
+  if (!sheetRef.value) return
+
+  await exportPdf(sheetRef.value,'landscape')
+}
 </script>
 
 <style lang="css" scoped>
@@ -48,5 +61,9 @@ const { labels, labelImg,picturesList } = usePicture();
   align-items: flex-start;
   align-content: flex-start;
   gap: 5mm;
+}
+
+.sheetContainer{
+  width: min-content;
 }
 </style>

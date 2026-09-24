@@ -10,6 +10,8 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@html2canvas/html2canvas": "^1.12.0",
+    "jspdf": "^4.2.1",
     "nuxt": "^4.5.2",
     "vue": "^3.5.41",
     "vue-advanced-cropper": "^2.8.9",
