@@ -18,11 +18,6 @@
     </v-row>
     <v-row>
       <v-col cols="12">
-        <PictureCropper v-if="menu === 'picture'" />
-      </v-col>
-    </v-row>
-    <v-row>
-      <v-col cols="12">
         <Resident v-if="menu === 'resident'" />
       </v-col>
     </v-row>

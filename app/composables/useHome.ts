@@ -1,23 +1,15 @@
 interface Menu {
-  value: "home" | "picture" | "labels" | "resident";
+  value: "labels" | "resident";
   label: string;
 }
 
 export const useHome = () => {
   const homeTitle = "Générateur d'étiquettes";
-  const menu = useState<"home" | "picture" | "labels" | "resident">(
+  const menu = useState< "labels" | "resident">(
     "menu",
-    () => "home",
+    () => "labels",
   );
   const navigation = ref<Menu[]>([
-    {
-      value: "home",
-      label: "Accueil",
-    },
-    {
-      value: "picture",
-      label: "Photos",
-    },
     {
       value: "labels",
       label: "Générateur d'étiquettes",
