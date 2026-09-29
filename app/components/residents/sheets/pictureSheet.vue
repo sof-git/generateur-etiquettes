@@ -28,10 +28,9 @@
                         <v-img
                         v-for="index in 2"
                         :key="index"
-                        class="border-lg border-blackBorder ma-1"
+                        class="border-lg border-blackBorder ma-1 w-100 square-img"
                         :src="pictureTemplate.src"
-                        width="100%"
-                        aspect-ratio="1"
+                        aspect-ratio="1/1"
                         cover
                         />
                     </v-col>
@@ -60,5 +59,9 @@ const generatePdf = async () => {
 }
 .sheetContainer{
   width: min-content;
+}
+.square-img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
 }
 </style>

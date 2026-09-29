@@ -1,6 +1,6 @@
 import type { IImage } from "@/types/images";
-
 export const useResident = () => {
+  const config = useRuntimeConfig();
   const { renderImage } = useImageRenderer();
   const title: Ref<string> = ref("Ajouter un résident");
   const file = ref<File | null>(null);
@@ -10,7 +10,7 @@ export const useResident = () => {
   const residentPicture = useState<IImage>("residentPicture", () =>
     reactive({
       id: 0,
-      src: "/img/defaultImg.png",
+      src: `${config.app.baseURL}img/defaultImg.png`,
       file: null,
       name: "",
     }),
@@ -18,7 +18,7 @@ export const useResident = () => {
   const pictureTemplate = useState<IImage>('pictureTemplate', ()=>
     reactive({
       id: 0,
-      src: "/img/defaultImg.png",
+      src: `${config.app.baseURL}img/defaultImg.png`,
       file: null,
       name: "",
     })

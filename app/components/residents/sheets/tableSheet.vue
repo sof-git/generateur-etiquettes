@@ -11,7 +11,9 @@
         <v-row>
           <v-col cols="12" class="d-flex flex-row justify-space-around ga-1 pa-0">
               <v-img v-for="(index) in 6" :key="index"
-                class="border-lg border-blackBorder"
+                class="border-lg border-blackBorder w-auto"
+                aspect-ratio="1"
+                cover
                 :src="pictureTemplate.src"
               >
               </v-img>
@@ -29,11 +31,11 @@
                     cols="5"
                   >
                     <v-img
-                      class="border-lg border-blackBorder"
+                      cover
+                      class="border-lg border-blackBorder square-img"
                       :src="pictureTemplate.src"
                       width="100%"
                       aspect-ratio="1"
-                      cover
                     />
                   </v-col>
                 </v-row>
@@ -43,18 +45,20 @@
             <v-row class="justify-center">
               <v-col offset="4" cols="8">
                 <v-img 
-                v-for="(index) in 2" :key="index"
-              class="border-lg border-blackBorder ma-1"
-              :src="pictureTemplate.src"
-              >
+                  v-for="(index) in 2" :key="index"
+                  class="border-lg border-blackBorder ma-1 square-img"
+                  cover
+                  :src="pictureTemplate.src"
+                >
             </v-img>
               </v-col>
             </v-row>
             <v-row>
               <v-col cols="12">
                 <v-img
-                  class="border-lg border-blackBorder"
-                :src="pictureTemplate.src"
+                  class="border-lg border-blackBorder square-img"
+                  cover
+                  :src="pictureTemplate.src"
                 ></v-img>
               </v-col>                      
             </v-row>
@@ -84,5 +88,9 @@ const generatePdf = async () => {
   padding: 7mm;
   width: 210mm;
   height: 297mm;
+}
+.square-img {
+  width: 100%;
+  aspect-ratio: 1/1;
 }
 </style>

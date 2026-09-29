@@ -8,6 +8,7 @@
     <v-card-item>
       <v-img
         class="border-xl border-orangeBorder"
+        cover
         :src="pictureTemplate.src" width="200" height="200"/>
     </v-card-item>
   </div>

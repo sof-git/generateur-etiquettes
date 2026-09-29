@@ -1,8 +1,9 @@
 <template>
   <v-img
-    class="photo border-dashed"
+    class="photo"
     :src="labelImg.src as string"
     alt="User Image"
+    cover
     aspect-ratio="1"
   ></v-img>
 </template>
@@ -16,6 +17,7 @@ const { labelImg } = usePicture();
   width: 30mm;
   height: 30mm;
   border-radius: 50%;
+  border-style: dotted;
   flex: 0 0 30mm;
   box-sizing: border-box;
 }
