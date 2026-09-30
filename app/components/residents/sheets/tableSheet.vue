@@ -11,7 +11,8 @@
         <v-row>
           <v-col cols="12" class="d-flex flex-row justify-space-around ga-1 pa-0">
               <v-img v-for="(index) in 6" :key="index"
-                class="border-lg border-blackBorder w-auto"
+                class="border-lg"
+                :style="`border-color:${borderColor};`"
                 aspect-ratio="1"
                 cover
                 :src="pictureTemplate.src"
@@ -32,8 +33,9 @@
                   >
                     <v-img
                       cover
-                      class="border-lg border-blackBorder square-img"
+                      class="border-lg square-img"
                       :src="pictureTemplate.src"
+                      :style="`border-color:${borderColor};`"
                       width="100%"
                       aspect-ratio="1"
                     />
@@ -46,7 +48,8 @@
               <v-col offset="4" cols="8">
                 <v-img 
                   v-for="(index) in 2" :key="index"
-                  class="border-lg border-blackBorder ma-1 square-img"
+                  class="border-lg ma-1 square-img"
+                  :style="`border-color:${borderColor};`"
                   cover
                   :src="pictureTemplate.src"
                 >
@@ -56,7 +59,8 @@
             <v-row>
               <v-col cols="12">
                 <v-img
-                  class="border-lg border-blackBorder square-img"
+                  class="border-lg ma-1 square-img"
+                  :style="`border-color:${borderColor};`"
                   cover
                   :src="pictureTemplate.src"
                 ></v-img>
@@ -78,9 +82,10 @@ const { exportPdf } = usePdfExport()
 const sheetRef = ref<HTMLElement | null>(null)
 const generatePdf = async () => {
   if (!sheetRef.value) return
-
   await exportPdf(sheetRef.value,'portrait')
 }
+const { borderColor } = useColorPicker();
+console.log(borderColor);
 </script>
 
 <style scoped lang="css">

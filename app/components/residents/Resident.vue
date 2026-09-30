@@ -52,8 +52,7 @@
 </template>
 
 <script setup lang="ts">
-const { title, residentPicture, residentsPictureList, file, addResident,pictureTemplate,switchPage } =
-  useResident();
+const { title, residentPicture, residentsPictureList, file, addResident,pictureTemplate,switchPage } = useResident();
 const { onFileChange } = useUpload();
 </script>
 

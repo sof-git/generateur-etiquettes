@@ -2,25 +2,37 @@
     <div ref="sheetRef" class="sheetContainer">
         <v-sheet class="sheet" color="white" elevation="3" rounded="lg">
             <v-container>
+        <v-row>
+          <v-col cols="12" class="d-flex flex-row justify-space-around ga-1 pa-0">
+              <v-img v-for="(index) in 6" :key="index"
+                class="border-lg"
+                :style="`border-color:${borderColor};`"
+                aspect-ratio="1"
+                cover
+                :src="pictureTemplate.src"
+              >
+              </v-img>
+          </v-col>
+        </v-row>
                 <v-row>
-                    <v-col
-                    v-for="index in 12"
-                    :key="index"
-                    cols="2"
-                    class="pictures-row"
-                    >
-                        <v-img
-                            class="border-lg border-blackBorder"
-                            :src="pictureTemplate.src"
-                            width="100%"
-                        />
-                    </v-col>
-                </v-row>
+          <v-col cols="12" class="d-flex flex-row justify-space-around ga-1 pa-0">
+              <v-img v-for="(index) in 6" :key="index"
+                class="border-lg"
+                :style="`border-color:${borderColor};`"
+                aspect-ratio="1"
+                cover
+                :src="pictureTemplate.src"
+              >
+              </v-img>
+          </v-col>
+        </v-row>
                 <v-row>
                     <v-col cols="6">
                         <v-img
-                            class="border-lg border-blackBorder"
+                            class="border-lg ma-1 square-img"
+                            :style="`border-color:${borderColor};`"
                             :src="pictureTemplate.src"
+                            cover
                             width="100%"
                         />                    
                     </v-col>
@@ -28,7 +40,8 @@
                         <v-img
                         v-for="index in 2"
                         :key="index"
-                        class="border-lg border-blackBorder ma-1 w-100 square-img"
+                        class="border-lg ma-1 square-img"
+                        :style="`border-color:${borderColor};`"
                         :src="pictureTemplate.src"
                         aspect-ratio="1/1"
                         cover
@@ -45,10 +58,11 @@ const { pictureTemplate } = useResident();
 const { exportPdf } = usePdfExport()
 const sheetRef = ref<HTMLElement | null>(null)
 const generatePdf = async () => {
-  if (!sheetRef.value) return
-
-  await exportPdf(sheetRef.value,'portrait')
-}
+    if (!sheetRef.value) return
+    await exportPdf(sheetRef.value,'portrait')
+    };
+const { borderColor } = useColorPicker();
+console.log(borderColor);
 </script>
 
 <style scoped lang="css">
