@@ -33,7 +33,6 @@ export const useImageRenderer = () => {
         ctx.save()
 
         if (options.crop === 'circle') {
-          console.log("circle option");
           ctx.beginPath()
 
           ctx.arc(
@@ -48,7 +47,6 @@ export const useImageRenderer = () => {
         }
 
         if (options.crop === 'square') {
-          console.log("square option");
           ctx.beginPath()
 
           ctx.rect(
@@ -66,7 +64,6 @@ export const useImageRenderer = () => {
         ctx.restore()
 const imageName = name ?? ( source instanceof HTMLCanvasElement ? '' : source.name)
         if (options.addName && imageName) {
-          console.log("if condition addName && imageName:", imageName);
           const fontSize =
             size * (options.fontSizeRatio ?? 0.18)
 

@@ -10,7 +10,7 @@ export const useResident = () => {
   const residentPicture = useState<IImage>("residentPicture", () =>
     reactive({
       id: 0,
-      src: `${config.app.baseURL}img/defaultImg.png`,
+      src: `${config.app.baseURL}/img/defaultImg.png`,
       file: null,
       name: "",
     }),
@@ -18,7 +18,7 @@ export const useResident = () => {
   const pictureTemplate = useState<IImage>('pictureTemplate', ()=>
     reactive({
       id: 0,
-      src: `${config.app.baseURL}img/defaultImg.png`,
+      src: `${config.app.baseURL}/img/defaultImg.png`,
       file: null,
       name: "",
     })
@@ -27,6 +27,7 @@ export const useResident = () => {
   const residentsPictureList = useState<IImage[]>("residentsPicturesList", () =>
     reactive([]),
   );
+  const tab = ref('placemat');
   const addResident = async (image: IImage,list: IImage[]) => {
     const data = await renderImage(
       image,
@@ -51,11 +52,11 @@ export const useResident = () => {
   return {
     title,
     file,
+    tab,
     residentPicture,
     addResident,
     pictureTemplate,
     residentsPictureList,
     switchPage,
-
   };
 };

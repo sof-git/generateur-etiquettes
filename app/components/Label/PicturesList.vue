@@ -22,7 +22,6 @@
 <script setup lang="ts">
 
 const props = defineProps(['picturesList','originalImage']);
-console.log(props);
 const { removePicture, selectPicture } = usePicture();
 </script>
 

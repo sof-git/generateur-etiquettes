@@ -10,16 +10,43 @@
     </v-row>
     <v-row>
       <v-col cols="auto">
-        <span class="ma-auto text-headline-medium">Changer de page</span><v-switch v-model="switchPage" thumb-color="primary"/>
+        <ColorPicker/>
       </v-col>
     </v-row>
     <v-row>
-      <v-col cols="8">
-        <tableSheet v-if="switchPage"/>
-        <pictureSheet v-else/>
+      <v-col cols="auto">
+        <v-btn
+          color="primary"
+          @click="generatePdf"
+        >
+          Exporter en PDF
+        </v-btn>           
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col cols="auto">
+        <v-sheet elevation="2">
+          <v-tabs v-model="tab" class="bg-navBackground">
+            <v-tab value="placemat">page 1</v-tab>
+            <v-tab value="pictures">page 2</v-tab>
+          </v-tabs>
+            <v-divider></v-divider>
+            <v-tabs-window v-model="tab">
+              <v-tabs-window-item value="placemat">
+                <div ref="sheetRef1">
+                  <tableSheet/>
+                </div>
+              </v-tabs-window-item>
+              <v-tabs-window-item value="pictures">
+                <div ref="sheetRef2">
+                  <pictureSheet />
+                </div>
+              </v-tabs-window-item>
+            </v-tabs-window>
+        </v-sheet>
       </v-col>
       <v-col cols="4">
-        <v-card class="ma-5 px-5 d-flex flex-column align-center">
+        <v-card class="px-5 d-flex flex-column align-center">
           <v-card-title class="text-center"> Résident </v-card-title>
           <v-img
             elevation="5"
@@ -43,7 +70,7 @@
           </div>
 
           <v-card-actions class="w-100 justify-center">
-            <v-btn :disabled="residentPicture.name ? false : true" @click="addResident(residentPicture,residentsPictureList)"> Créer </v-btn>
+            <v-btn color="primary" :disabled="residentPicture.name ? false : true" @click="addResident(residentPicture,residentsPictureList)"> Créer </v-btn>
           </v-card-actions>
         </v-card>
       </v-col>
@@ -52,8 +79,26 @@
 </template>
 
 <script setup lang="ts">
-const { title, residentPicture, residentsPictureList, file, addResident,pictureTemplate,switchPage } = useResident();
+const { title, residentPicture, residentsPictureList, file, addResident,pictureTemplate,switchPage,tab } = useResident();
 const { onFileChange } = useUpload();
+const { exportPdf } = usePdfExport();
+
+const generatePdf = async () => {
+  if (!sheetRef1.value || !sheetRef2.value) return
+
+  await exportPdf(sheetRef1.value, 'portrait')
+
+  tab.value = 'pictures'
+
+  await nextTick()
+
+  await new Promise(resolve => setTimeout(resolve, 500))
+
+  await exportPdf(sheetRef2.value, 'portrait')
+}
+const sheetRef1 = ref<HTMLElement | null>(null)
+const sheetRef2 = ref<HTMLElement | null>(null)
+
 </script>
 
 <style lang="css" scoped>
