@@ -41,7 +41,7 @@ const sheetRef = ref<HTMLElement | null>(null)
 const generatePdf = async () => {
   if (!sheetRef.value) return
 
-  await exportPdf(sheetRef.value,'landscape')
+  await exportPdf([sheetRef.value],'landscape')
 }
 </script>
 

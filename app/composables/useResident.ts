@@ -47,7 +47,6 @@ export const useResident = () => {
       file: image.file,
       name: image.name,
     })
-    console.log(list,residentsId)
   }
   return {
     title,

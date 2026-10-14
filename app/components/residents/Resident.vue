@@ -2,20 +2,21 @@
   <v-container>
     <v-row class="justify-center">
       <v-col cols="auto">
-        <div class="text-headline-large">{{ title }}</div>
+        <div data-html2canvas-ignore class="text-headline-large">{{ title }}</div>
       </v-col>
     </v-row>
     <v-row>
-      <PicturesList :pictures-list="residentsPictureList" :originalImage="pictureTemplate"/>
+      <PicturesList data-html2canvas-ignore :pictures-list="residentsPictureList" :originalImage="pictureTemplate"/>
     </v-row>
     <v-row>
       <v-col cols="auto">
-        <ColorPicker/>
+        <ColorPicker data-html2canvas-ignore/>
       </v-col>
     </v-row>
     <v-row>
       <v-col cols="auto">
         <v-btn
+          data-html2canvas-ignore
           color="primary"
           @click="generatePdf"
         >
@@ -46,7 +47,7 @@
         </v-sheet>
       </v-col>
       <v-col cols="4">
-        <v-card class="px-5 d-flex flex-column align-center">
+        <v-card data-html2canvas-ignore class="px-5 d-flex flex-column align-center">
           <v-card-title class="text-center"> Résident </v-card-title>
           <v-img
             elevation="5"
@@ -69,7 +70,7 @@
             />
           </div>
 
-          <v-card-actions class="w-100 justify-center">
+          <v-card-actions data-html2canvas-ignore class="w-100 justify-center">
             <v-btn color="primary" :disabled="residentPicture.name ? false : true" @click="addResident(residentPicture,residentsPictureList)"> Créer </v-btn>
           </v-card-actions>
         </v-card>
@@ -84,17 +85,26 @@ const { onFileChange } = useUpload();
 const { exportPdf } = usePdfExport();
 
 const generatePdf = async () => {
-  if (!sheetRef1.value || !sheetRef2.value) return
+if (!sheetRef1.value || !sheetRef2.value) return
 
-  await exportPdf(sheetRef1.value, 'portrait')
+await exportPdf(
+[sheetRef1.value, sheetRef2.value],
+'portrait',
+async (index) => {
+tab.value = index === 0 ? 'placemat' : 'pictures'
 
-  tab.value = 'pictures'
-
+  // Attend le rendu Vue et les mises à jour du navigateur.
   await nextTick()
+  await new Promise<void>((resolve) => {
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => resolve())
+    })
+  })
+},
 
-  await new Promise(resolve => setTimeout(resolve, 500))
+)
 
-  await exportPdf(sheetRef2.value, 'portrait')
+tab.value = 'placemat'
 }
 const sheetRef1 = ref<HTMLElement | null>(null)
 const sheetRef2 = ref<HTMLElement | null>(null)

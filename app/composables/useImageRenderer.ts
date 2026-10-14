@@ -62,7 +62,11 @@ export const useImageRenderer = () => {
         ctx.drawImage(image, 0, 0)
 
         ctx.restore()
-const imageName = name ?? ( source instanceof HTMLCanvasElement ? '' : source.name)
+
+        const imageName =
+          name ??
+          (source instanceof HTMLCanvasElement ? '' : source.name)
+
         if (options.addName && imageName) {
           const fontSize =
             size * (options.fontSizeRatio ?? 0.18)
@@ -82,7 +86,19 @@ const imageName = name ?? ( source instanceof HTMLCanvasElement ? '' : source.na
           )
         }
 
-        resolve(canvas.toDataURL('image/png'))
+        // Canvas → Blob → URL temporaire
+        canvas.toBlob((blob) => {
+
+          if (!blob) {
+            resolve(null)
+            return
+          }
+
+          const url = URL.createObjectURL(blob)
+
+          resolve(url)
+
+        }, 'image/png')
       }
 
       // Source = Canvas

@@ -70,6 +70,7 @@
 
 <script setup lang="ts">
 const { pictureTemplate } = useResident();
+console.log(pictureTemplate);
 const { borderColor } = useColorPicker();
 </script>
 
