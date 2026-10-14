@@ -20,7 +20,7 @@
             elevation="3"
             rounded="lg"
           >
-            <Label v-for="(size, index) in labels" :key="index" :size="size" />
+            <PictureLabel v-for="(size, index) in labels" :key="index" :size="size" />
             <div class="picContainer ml-1">
               <Picture v-for="index in 6" :key="`picture-${index}`" />
             </div>

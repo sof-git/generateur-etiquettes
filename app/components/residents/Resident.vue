@@ -85,26 +85,26 @@ const { onFileChange } = useUpload();
 const { exportPdf } = usePdfExport();
 
 const generatePdf = async () => {
-if (!sheetRef1.value || !sheetRef2.value) return
+  if (!sheetRef1.value || !sheetRef2.value) return
 
-await exportPdf(
-[sheetRef1.value, sheetRef2.value],
-'portrait',
-async (index) => {
-tab.value = index === 0 ? 'placemat' : 'pictures'
+  await exportPdf(
+  [sheetRef1.value, sheetRef2.value],
+  'portrait',
+  async (index) => {
+  tab.value = index === 0 ? 'placemat' : 'pictures'
 
-  // Attend le rendu Vue et les mises à jour du navigateur.
-  await nextTick()
-  await new Promise<void>((resolve) => {
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => resolve())
+    // Attend le rendu Vue et les mises à jour du navigateur.
+    await nextTick()
+    await new Promise<void>((resolve) => {
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => resolve())
+      })
     })
-  })
-},
+  },
 
-)
+  )
 
-tab.value = 'placemat'
+  tab.value = 'placemat'
 }
 const sheetRef1 = ref<HTMLElement | null>(null)
 const sheetRef2 = ref<HTMLElement | null>(null)
