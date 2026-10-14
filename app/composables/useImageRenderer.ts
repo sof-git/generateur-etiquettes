@@ -72,7 +72,7 @@ export const useImageRenderer = () => {
             size * (options.fontSizeRatio ?? 0.18)
 
           const bottomOffset =
-            size * (options.bottomOffsetRatio ?? 0.08)
+            (size * (options.bottomOffsetRatio ?? 0.08)) + 150
 
           ctx.fillStyle = 'white'
           ctx.font = `bold ${fontSize}px Arial`
