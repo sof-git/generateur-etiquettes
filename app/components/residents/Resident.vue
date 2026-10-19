@@ -16,11 +16,19 @@
     <v-row>
       <v-col cols="auto">
         <v-btn
-          data-html2canvas-ignore
           color="primary"
           @click="generatePdf"
-        >
+        ><div v-if="!exportLoading">
           Exporter en PDF
+        </div>
+        <div v-else>
+          export en cours 
+          <v-progress-circular
+            v-if="exportLoading"
+            color="primary"
+            indeterminate>
+          </v-progress-circular>
+        </div>
         </v-btn>           
       </v-col>
     </v-row>
@@ -82,9 +90,10 @@
 <script setup lang="ts">
 const { title, residentPicture, residentsPictureList, file, addResident,pictureTemplate,switchPage,tab } = useResident();
 const { onFileChange } = useUpload();
-const { exportPdf } = usePdfExport();
+const { exportPdf,exportLoading } = usePdfExport();
 
 const generatePdf = async () => {
+  exportLoading.value = !exportLoading;
   if (!sheetRef1.value || !sheetRef2.value) return
 
   await exportPdf(
@@ -105,6 +114,7 @@ const generatePdf = async () => {
   )
 
   tab.value = 'placemat'
+  exportLoading.value = !exportLoading;
 }
 const sheetRef1 = ref<HTMLElement | null>(null)
 const sheetRef2 = ref<HTMLElement | null>(null)

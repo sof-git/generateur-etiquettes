@@ -10,8 +10,17 @@
         <v-btn
           color="primary"
           @click="generatePdf"
-        >
+        ><div v-if="!exportLoading">
           Exporter en PDF
+        </div>
+        <div v-else>
+          export en cours 
+          <v-progress-circular
+            v-if="exportLoading"
+            color="primary"
+            indeterminate>
+          </v-progress-circular>
+        </div>
         </v-btn>          
         <div ref="sheetRef" class="sheetContainer">
           <v-sheet
@@ -36,12 +45,14 @@
 
 <script setup lang="ts">
 const { labels, labelImg,picturesList } = usePicture();
-const { exportPdf } = usePdfExport()
+const { exportPdf,exportLoading } = usePdfExport()
 const sheetRef = ref<HTMLElement | null>(null)
 const generatePdf = async () => {
+  exportLoading.value = !exportLoading;
   if (!sheetRef.value) return
 
   await exportPdf([sheetRef.value],'landscape')
+  exportLoading.value = !exportLoading;
 }
 </script>
 

@@ -2,9 +2,11 @@ import html2canvas from '@html2canvas/html2canvas'
 import { jsPDF } from 'jspdf'
 
 export const usePdfExport = () => {
+  
+  const exportLoading = ref(false);
+
   const waitForImages = async (element: HTMLElement) => {
     const images = Array.from(element.querySelectorAll('img'))
-
     await Promise.all(
       images.map(async (img) => {
         if (!img.complete) {
@@ -148,5 +150,6 @@ export const usePdfExport = () => {
 
   return {
     exportPdf,
+    exportLoading,
   }
 }
